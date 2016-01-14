@@ -1,3 +1,174 @@
+body, header, nav, h1, footer {
+    margin: 0px;
+    border: 0px;
+    padding: 0px;
+}
+
 body {
-    font-family: arial;
+    font-family: 'Ubuntu', sans-serif;
+    color: #05131C;
+    width: 720px;
+    background-color: #E9F0F5;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+header, footer {
+    background-color: #0088E3;
+    text-align: center;
+    color: #E9F0F5;
+}
+
+header {
+    font-size: 48pt;
+}
+
+footer {
+    padding: 10px;
+}
+
+a {
+    padding: 3px;
+    color: #E9F0F5;
+    text-decoration: none;
+}
+
+a:hover {
+    background-color: #F2DC49;
+    color: #05131C;
+}
+
+p {
+    margin: 2px;
+}
+
+div#locator {
+    background-color: #F2DC49;
+    padding: 4px;
+}
+
+form {
+    width:80%;
+    margin: 0 auto;
+}
+
+input {
+    font-family: 'Ubuntu', sans-serif;
+    border-style: none;
+    border-color: #E9F0F5;
+    background-color: #E9F0F5;
+    padding: 3px;
+}
+
+input.button {
+    background-color: #E9F0F5;
+    font-weight: bold;
+}
+
+input.button:hover {
+    background-color: #0088E3;
+    color: #E9F0F5;
+}
+
+input {
+    width: auto;
+}
+
+.wide {
+    width: 30%;
+}
+
+.small {
+    width: 20%;
+}
+
+.narrow {
+    width: 10%;
+}
+
+ul {
+    list-style-type: none;
+    display: inline;
+    padding: 0px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+ul li {
+    display: inline;
+}
+
+div#content {
+    height: 346px;
+    width:660px;
+    margin: 0 auto;
+}
+
+div#content a {
+    background-color: #0088E3;
+    margin: 20px 0px;
+    width:310px;
+    height:300px;
+    text-align: center;
+}
+
+div#content a img {
+    max-width: 75%;
+    max-height: 75%;
+    margin: 30px auto;
+}
+
+a#current {
+    float:left;
+}
+
+a#forecast {
+    float:right;
+}
+
+div#content a:hover {
+    background-color: #F2DC49;
+}
+
+nav {
+    background-color: #F2DC49;
+    padding: 5px;
+}
+
+nav a {
+    color: #05131C;
+    padding: 5px;
+}
+
+nav a:hover {
+    background-color: #0088E3;
+    color: #E9F0F5;
+}
+
+table {
+    border-collapse: separate;
+    border-spacing: 20px 5px;
+    margin: 30px auto;
+}
+
+td {
+    background-color: #0088E3;
+    padding: 4px;
+    text-align: center;
+    font-weight: bold;
+    color: #E9F0F5;
+}
+
+table img {
+    width:100px;
+}
+
+table#current {
+    border-spacing: 5px;
+}
+
+table#current img {
+    width:300px;
+    margin: 20px;
 }

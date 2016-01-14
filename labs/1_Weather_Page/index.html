@@ -3,22 +3,37 @@
 <head>
     <title>Weather</title>
     <link rel="stylesheet" type="text/css" href="style.css" />
+    <link href='https://fonts.googleapis.com/css?family=Ubuntu:400,500' rel='stylesheet' type='text/css'>
 </head>
 <body>
 
 <header>
-    <h1>Weather</h1>
+    <h1>Weather!</h1>
 </header>
 
+<div id="locator">
+    <form>
+        <ul>
+            <li><input class="wide" type="text" name="city" value="city" /></li>
+            <li ><input class="small" type="text" name="state" value="state" /></li>
+            <li class="narrow">or</li>
+            <li><input class="wide" type="text" name="zip" value="zip-code" /></li>
+            <li><input class="narrow button" type="submit" value="Go!" /></li>
+        </ul>
+    </form>
+</div>
+
 <div id="content">
-    <ul>
-        <li><a href="weather.html">Current Weather</a></li>
-        <li><a href="forecast.html">Future Weather</a></li>
-    </ul>
+    <a href="current.html" id="current">Current Weather<img src="img/snowy.png" /></a>
+    <a href="forecast.html" id="forecast">Future Weather<img src="img/partly-cloudy.png" /></a>
 </div>
 
 <footer>
-    <pre>Created by Matt Hoiland. <a href="resume.txt" download>Download Resume</a> <a href="contact_form.html">Contact</a></pre>
+    <p>Created by Matthew Hoiland</p>
+    <ul>
+        <li><a href="resume.html">Resume</a></li>
+        <li><a href="mailto:matthew.proctor.hoiland@gmail.com?Subject=Message%20from%20Weather%20App" target="_top">email</a></li>
+    </ul>
 </footer>
 
 </body>

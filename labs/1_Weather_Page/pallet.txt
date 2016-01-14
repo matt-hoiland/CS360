@@ -1,0 +1,6 @@
+pallet:
+
+main-color: #0088E3 (blue)
+accent-color: #F2DC49 (gold)
+background-color: #E9F0F5 (grey)
+text-color: #05131C (cobolt)

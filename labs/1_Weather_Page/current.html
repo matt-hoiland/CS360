@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Weather -- Forecast</title>
+    <title>Weather -- Current</title>
     <link rel="stylesheet" type="text/css" href="style.css" />
     <link href='https://fonts.googleapis.com/css?family=Ubuntu:400,500' rel='stylesheet' type='text/css'>
 </head>
@@ -19,35 +19,15 @@
     </ul>
 </nav>
 
-<table>
-    <tr>
-        <td>Monday</td>
-        <td>Tuesday</td>
-        <td>Wednesday</td>
-        <td>Thursday</td>
-        <td>Friday</td>
-    </tr>    
-    <tr>
-        <td><img src="img/partly-cloudy.png"></td>
-        <td><img src="img/partly-cloudy.png"></td>
-        <td><img src="img/sunny.png"></td>
-        <td><img src="img/snowy.png"></td>
-        <td><img src="img/snowy.png"></td>
-    </tr>
-    <tr>
-        <td>34</td>
-        <td>37</td>
-        <td>43</td>
-        <td>28</td>
-        <td>30</td>
-    </tr>
-    <tr>
-        <td>18</td>
-        <td>14</td>
-        <td>12</td>
-        <td>20</td>
-        <td>21</td>
-    </tr>
+<table id="current">
+    <tr><td colspan="2">Sunday</td></tr>
+    <tr><td rowspan="7"><img src="img/snowy.png"></td><td>Snowy</td></tr>
+    <tr><td>Actual: 30</td></tr>
+    <tr><td>Windchill: 28</td></tr>
+    <tr><td>Precipitation: 78%</td></tr>
+    <tr><td>Wind: 3mph NNE</td></tr>
+    <tr><td>High: 30</td></tr>
+    <tr><td>Low: 22</td></tr>
 </table>
 
 <footer>
