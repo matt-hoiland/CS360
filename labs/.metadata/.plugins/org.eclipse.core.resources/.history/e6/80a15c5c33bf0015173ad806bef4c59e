@@ -1,0 +1,68 @@
+/*
+ * Downloader.h
+ *
+ *  Created on: Jan 19, 2016
+ *      Author: matt
+ */
+
+#ifndef DOWNLOADER_H_
+#define DOWNLOADER_H_
+
+#include <iostream>
+
+#include <errno.h>      //nope
+#include <netdb.h>      //yup
+#include <stdio.h>      //yup
+#include <stdlib.h>     //yup
+#include <string.h>     //yup
+#include <sys/types.h>  //yup
+#include <sys/socket.h> //yup
+#include <unistd.h>     //yup
+
+class Downloader {
+private:
+	std::string hostname;
+	unsigned int port;
+	std::string url;
+	bool debug;
+	unsigned int count;
+
+	int socket;
+
+	bool supressBody() {
+		return count > 1;
+	}
+
+	void create() {
+		struct sockaddr_in serverAddress;
+
+		struct hostent* hostEntry;
+		hostEntry = gethostbyname(hostname.c_str());
+		if (!hostEntry) {
+			std::cout << "Couldn't resolve the hostname: " << hostname << "." << std::endl;
+		}
+	}
+
+	void download() {
+
+	}
+
+	void close() {
+
+	}
+
+public:
+	Downloader(std::string hostname, unsigned int port, std::string url, bool debug, int count) :
+		hostname(hostname), port(port), url(url), debug(debug), count(count) {}
+
+	void run() {
+		create();
+		for (int i = 0; i < count; i++) {
+			download();
+		}
+		close();
+	}
+};
+
+
+#endif /* DOWNLOADER_H_ */

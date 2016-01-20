@@ -1,0 +1,49 @@
+/*
+ * Downloader.h
+ *
+ *  Created on: Jan 19, 2016
+ *      Author: matt
+ */
+
+#ifndef DOWNLOADER_H_
+#define DOWNLOADER_H_
+
+class Downloader {
+private:
+	std::string hostname;
+	unsigned int port;
+	std::string url;
+	bool debug;
+	unsigned int count;
+
+	bool supressBody() {
+		return count > 1;
+	}
+
+	void create() {
+
+	}
+
+	void download() {
+
+	}
+
+	void close() {
+
+	}
+
+public:
+	Downloader(std::string hostname, unsigned int port, std::string url, bool debug, int count) :
+		hostname(hostname), port(port), url(url), debug(debug), count(count) {}
+
+	void run() {
+		create();
+		for (int i = 0; i < count; i++) {
+			download();
+		}
+		close();
+	}
+};
+
+
+#endif /* DOWNLOADER_H_ */

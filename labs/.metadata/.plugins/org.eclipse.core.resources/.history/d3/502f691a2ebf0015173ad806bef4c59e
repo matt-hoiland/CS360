@@ -1,0 +1,13 @@
+#include <iostream>
+
+#include "Downloader.h"
+
+int main(int argc, char** argv) {
+	// Parse options, set flags
+	std::string hostname, url;
+	unsigned int port, count;
+
+	// Execute main program
+	Downloader().run();
+	return 0;
+}
