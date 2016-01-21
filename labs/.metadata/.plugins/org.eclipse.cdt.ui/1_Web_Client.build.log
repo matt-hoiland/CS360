@@ -1,8 +1,8 @@
-22:47:26 **** Incremental Build of configuration Debug for project 1_Web_Client ****
+21:09:24 **** Incremental Build of configuration Debug for project 1_Web_Client ****
 make all 
 Building file: ../main.cpp
 Invoking: GCC C++ Compiler
-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"main.d" -MT"main.d" -o "main.o" "../main.cpp"
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -std=c++11 -MMD -MP -MF"main.d" -MT"main.d" -o "main.o" "../main.cpp"
 Finished building: ../main.cpp
  
 Building target: 1_Web_Client
@@ -11,5 +11,5 @@ g++  -o "1_Web_Client"  ./main.o
 Finished building target: 1_Web_Client
  
 
-22:47:27 Build Finished (took 1s.482ms)
+21:09:28 Build Finished (took 3s.818ms)
 

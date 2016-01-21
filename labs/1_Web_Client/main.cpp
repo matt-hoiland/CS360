@@ -1,8 +1,11 @@
+#include <cctype>
 #include <cstdlib>
 #include <iostream>
 #include <unistd.h>
 
 #include "Downloader.h"
+
+using namespace std;
 
 bool isNumber(std::string arg) {
 	for (unsigned int i = 0; i < arg.size(); i++) {
@@ -20,23 +23,9 @@ int main(int argc, char** argv) {
 	unsigned int count = 1;
 	bool debug = false;
 
-	if (argc < 4) {
-		std::cout << "USAGE: ./download <host_name> <port> <url> [-d] [-c:]" << std::endl;
-		return 0;
-	}
-
-	if (!isNumber(std::string(argv[2]))) {
-		std::cout << "USAGE: <port> should be an unsigned integer" << std::endl;
-		return 0;
-	}
-	hostname = std::string(argv[1]);
-	port = atoi(argv[2]);
-	url = std::string(argv[3]);
-
-	int c;
-
-	while ((c = getopt(argc, argv, "dc:")) != -1) {
-		switch (c) {
+	int option;
+	while ((option = getopt(argc, argv, "dc:")) != -1) {
+		switch (option) {
 		case 'd':
 			debug = true;
 			break;
@@ -44,6 +33,20 @@ int main(int argc, char** argv) {
 			count = atoi(optarg);
 		}
 	}
+
+	if (argc - optind < 3) {
+		std::cout << "USAGE: ./download <host_name> <port> <url> [-d] [-c:]" << std::endl;
+		return 0;
+	}
+
+	if (!isNumber(std::string(argv[optind + 1]))) {
+		std::cout << "USAGE: <port> should be an unsigned integer" << std::endl;
+		return 0;
+	}
+
+	hostname = std::string(argv[optind]);
+	port = atoi(argv[optind + 1]);
+	url = std::string(argv[optind + 2]);
 
 	// Execute main program
 	Downloader(hostname, port, url, debug, count).run();

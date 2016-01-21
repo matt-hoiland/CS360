@@ -20,11 +20,19 @@
 #include <sys/socket.h> //yup
 #include <unistd.h>     //yup
 
+#include "HttpMessage.h"
+
+using namespace std;
+
+/**
+ * Use 1 socket for each request, regardless of 1.0 or 1.1
+ */
+
 class Downloader {
 private:
-	std::string hostname;
+	string hostname;
 	unsigned int port;
-	std::string url;
+	string url;
 	bool debug;
 	unsigned int count;
 
@@ -34,16 +42,15 @@ private:
 		return count > 1;
 	}
 
-	void create() {
+	bool create() {
 		struct sockaddr_in serverAddress;
 
 		struct hostent* hostEntry;
 		hostEntry = gethostbyname(hostname.c_str());
 		if (!hostEntry) {
-			std::cout << "Err: Couldn't resolve the hostname: " << hostname << "." << std::endl;
-			exit(-1);
+			cout << "Err: Couldn't resolve the hostname: " << hostname << "." << endl;
+			return false;
 		}
-		std::cout << hostEntry->h_length << std::endl;
 
 		memset(&serverAddress, 0, sizeof(serverAddress));
 		serverAddress.sin_family = AF_INET;
@@ -52,26 +59,33 @@ private:
 
 		server = socket(PF_INET, SOCK_STREAM, 0);
 		if (!server) {
-			std::cout << "Err: Could not allocate a fresh socket" << std::endl;
-			exit(-1);
+			cout << "Err: Could not allocate a fresh socket" << endl;
+			return false;
 		}
 
 		if (connect(server, (const struct sockaddr*) &serverAddress, sizeof(serverAddress)) < 0) {
-			std::cout << "Err: Couldn't connect to the address" << std::endl;
-			exit(-1);
+			perror("Address");
+			return false;
 		}
-		std::cout << "So far so good!" << std::endl;
+
+		return true;
 	}
 
-	void download() {
-		std::string response;
+	bool download() {
+		HttpResponse response;
 		if (sendRequest() && retrieveResponse(response)) {
-			std::cout << response << std::endl;
+			if (!supressBody() && debug) {
+				cout << response.toString() << endl;
+			} else if (!supressBody()) {
+				cout << response.getBody() << endl;
+			}
+			return true;
 		}
+		return false;
 	}
 
 	bool sendRequest() {
-		std::stringstream reqStream;
+		stringstream reqStream;
 		reqStream << "GET " << url << " HTTP/1.0\n\n";
 		const char* request = reqStream.str().c_str();
 
@@ -84,12 +98,12 @@ private:
 					// C'etait interrompu, essaies une fois de plus
 					continue;
 				} else {
-					std::cout << "An error occured while sending the request:" << std::endl;
-					std::cout << reqStream.str() << std::endl;
+					cout << "An error occured while sending the request:" << endl;
+					cout << reqStream.str() << endl;
 					return false;
 				}
 			} else if (sent == 0) {
-				std::cout << "Server side closed the socket while sending the request" << std::endl;
+				cout << "Server side closed the socket while sending the request" << endl;
 				return false;
 			}
 
@@ -103,24 +117,69 @@ private:
 	unsigned int bufflen;
 	char* buffer;
 
-	bool retrieveResponse(std::string& response) {
-		response = "";
-		while (response.find("\n\n") == std::string::npos) {
+	bool retrieveResponse(HttpResponse& response) {
+		string headers, remainder;
+		if (!retrieveHeaders(headers, remainder)) {
+			return false;
+		}
+
+		response = HttpResponse(headers);
+
+		if (!retrieveBody(remainder, response.getContentLength())) {
+			return false;
+		}
+
+		response.setBody(remainder);
+
+		return true;
+	}
+
+	bool retrieveBody(string& body, int contentLength) {
+		contentLength -= body.length();
+
+		while (contentLength > 0) {
 			int received = recv(server, buffer, bufflen, 0);
 			if (received < 0) {
 				if (errno == EINTR) {
 					continue;
 				} else {
-					std::cout << "An error occurred while reading the response" << std::endl;
+					cout << "An error occurred while reading the response" << endl;
 					return false;
 				}
 			} else if (received == 0) {
-				std::cout << "Server side closed the socket while reading the response:" << std::endl;
-				std::cout << response << std::endl;
+				cout << "Server side closed the socket while reading the response:" << endl;
 				return false;
 			}
-			response.append(buffer, received);
+			body.append(buffer, received);
+			contentLength -= received;
 		}
+
+		return true;
+	}
+
+	bool retrieveHeaders(string& headers, string& remainder) {
+		headers = "";
+		unsigned int splitind;
+		while ((splitind = headers.find("\r\n\r\n")) == string::npos) {
+
+			int received = recv(server, buffer, bufflen, 0);
+			if (received < 0) {
+				if (errno == EINTR) {
+					continue;
+				} else {
+					cout << "An error occurred while reading the response" << endl;
+					return false;
+				}
+			} else if (received == 0) {
+				cout << "Server side closed the socket while reading the response:" << endl;
+				cout << headers << endl;
+				return false;
+			}
+			headers.append(buffer, received);
+		}
+
+		remainder = headers.substr(splitind + 4);
+		headers = headers.substr(0, splitind);
 		return true;
 	}
 
@@ -129,18 +188,24 @@ private:
 	}
 
 public:
-	Downloader(std::string hostname, unsigned int port, std::string url, bool debug, int count) :
+	Downloader(string hostname, unsigned int port, string url, bool debug, int count) :
 		hostname(hostname), port(port), url(url), debug(debug), count(count), server(-1) {
 		bufflen = 1024;
 		buffer = new char[bufflen];
 	}
 
 	void run() {
-		create();
+		int successes = 0;
 		for (unsigned int i = 0; i < count; i++) {
-			download();
+			if (create() && download()) {
+				closeSocket();
+				successes++;
+			}
 		}
-		closeSocket();
+
+		if (supressBody()) {
+			cout << successes << " out of " << count << " attempts successful!" << endl;
+		}
 	}
 };
 

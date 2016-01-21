@@ -1,0 +1,56 @@
+/*
+ * HttpMessage.h
+ *
+ *  Created on: Jan 20, 2016
+ *      Author: matt
+ */
+
+#ifndef HTTPMESSAGE_H_
+#define HTTPMESSAGE_H_
+
+#include <map>
+#include <sstream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+class HttpResponse {
+private:
+	string protocol;
+	int responseCode;
+	string responseMessage;
+
+	map<string, vector<string> > headers;
+
+	string body;
+
+	void parseProtocolLine(string protocolLine) {
+
+	}
+
+	void parseHeaderLine(string headerLine) {
+
+	}
+
+	void parseHeaders(string headers) {
+
+	}
+
+public:
+	HttpResponse(string headers) {
+		parseHeaders(headers);
+	}
+
+	HttpResponse(string protocol, int responseCode, string responseMessage) {
+		this->protocol = protocol;
+		this->responseCode = responseCode;
+		this->responseMessage = responseMessage;
+
+		body = "";
+	}
+};
+
+
+
+#endif /* HTTPMESSAGE_H_ */

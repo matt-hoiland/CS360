@@ -1,0 +1,91 @@
+/*
+ * HttpMessage.h
+ *
+ *  Created on: Jan 20, 2016
+ *      Author: matt
+ */
+
+#ifndef HTTPMESSAGE_H_
+#define HTTPMESSAGE_H_
+
+#include <map>
+#include <sstream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+class HttpResponse {
+private:
+	string protocol;
+	int responseCode;
+	string responseMessage;
+
+	map<string, vector<string> > headers;
+
+	string body;
+
+	void parseProtocolLine(string protocolLine) {
+		istringstream protos(protocolLine);
+		protos >> protocol >> responseCode >> responseMessage;
+	}
+
+	void parseHeaderLine(string headerLine) {
+		int colon = headerLine.find(":");
+		string key = headerLine.substr(0, colon);
+		string list = headerLine.substr(colon + 1);
+		headers[key] = split(list);
+	}
+
+	vector<string> split(string values) {
+		vector<string> v;
+
+		int semi;
+		while ((semi = values.find(";")) != string::npos) {
+			string s = values.substr(0, semi);
+			s.erase(s.find_last_not_of(" \n\r\t")+1);
+			v.push_back(s);
+
+			values = values.substr(semi + 1);
+		}
+
+		return v;
+	}
+
+	void parseHeaders(string headers) {
+		istringstream in(headers);
+
+		string input;
+		getline(in, input);
+		parseProtocolLine(input);
+
+		while (getline(in, input)) {
+			parseHeaderLine(input);
+		}
+	}
+
+public:
+	HttpResponse(string headers) {
+		parseHeaders(headers);
+	}
+
+	HttpResponse(string protocol, int responseCode, string responseMessage) {
+		this->protocol = protocol;
+		this->responseCode = responseCode;
+		this->responseMessage = responseMessage;
+
+		body = "";
+	}
+
+	string toString() {
+		ostringstream out;
+		out << protocol << " " << responseCode << " " << responseMessage << endl;
+		for (pair <string, vector<string> > p : headers) {
+
+		}
+	}
+};
+
+
+
+#endif /* HTTPMESSAGE_H_ */
