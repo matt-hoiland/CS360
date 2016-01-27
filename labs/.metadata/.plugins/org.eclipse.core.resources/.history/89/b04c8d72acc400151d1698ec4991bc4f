@@ -1,0 +1,15 @@
+#include <iostream>
+
+#include <unistd.h>
+
+using namespace std;
+
+int main(int argc, char** argv) {
+	cout << "This is the part when..." << endl;
+
+	int option;
+	while ((option = getopt(argc, argv, "d")) != 0) {
+
+	}
+	return 0;
+}

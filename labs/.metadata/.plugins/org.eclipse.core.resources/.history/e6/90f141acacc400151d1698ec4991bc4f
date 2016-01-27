@@ -1,0 +1,24 @@
+#include <iostream>
+
+#include <unistd.h>
+
+using namespace std;
+
+int main(int argc, char** argv) {
+	cout << "This is the part when..." << endl;
+
+	bool debug = false;
+
+	int option;
+	while ((option = getopt(argc, argv, "d")) != -1) {
+		switch (option) {
+		case 'd' :
+			debug = true;
+			break;
+		}
+	}
+
+	int port = argv[optind];
+	string dir = atoi(argv[optind + 1]);
+	return 0;
+}

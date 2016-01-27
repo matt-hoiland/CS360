@@ -1,0 +1,31 @@
+/*
+ * Server.h
+ *
+ *  Created on: Jan 26, 2016
+ *      Author: matt
+ */
+
+#ifndef SERVER_H_
+#define SERVER_H_
+
+using namespace std;
+
+class Server {
+private:
+	bool debug;
+	unsigned int port;
+	string dir;
+
+public:
+	Server(bool debug, unsigned int port, string dir) :
+		debug(debug), port(port), dir(dir) {}
+	~Server() {}
+
+	void run() {
+
+	}
+};
+
+
+
+#endif /* SERVER_H_ */
