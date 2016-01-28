@@ -69,10 +69,10 @@ private:
 			int client = accept(server, (struct sockaddr*) &clientAddress, &clientLength);
 			if (!client) {
 				perror("accept");
-				exit(-1);
+				//exit(-1);
 			}
 			if (debug) cout << "Client accepted!" << endl;
-			ClientHandler(client, debug).handle();
+			ClientHandler(client, dir, debug).handle();
 			close(client);
 		}
 

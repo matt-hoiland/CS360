@@ -8,6 +8,7 @@
 #include <unistd.h>
 
 #include "Server.h"
+#include "DirectoryListing.h"
 
 using namespace std;
 
@@ -95,6 +96,7 @@ void setUpHandlers() {
 
 
 void mainHandler(int status) {
+	cout << "status: " << status << endl;
 	switch(status) {
 	case SIGSEGV:
 		handleSegFault();
