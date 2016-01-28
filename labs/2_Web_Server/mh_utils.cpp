@@ -3,7 +3,7 @@
 std::vector<std::string> MH::split(std::string values, std::string regex) {
 	std::vector<std::string> v;
 
-	unsigned int semi;
+	int semi;
 	std::string s;
 	while ((semi = values.find(regex)) != std::string::npos) {
 		v.push_back(trim(values.substr(0, semi)));
