@@ -128,6 +128,13 @@ public:
 		return 0;
 	}
 
+	void addHeader(string key, string value) {
+		if (headers.count(key) == 0) {
+			headers[key] = vector<string>();
+		}
+		headers[key].push_back(value);
+	}
+
 	string getBody() {
 		return body;
 	}

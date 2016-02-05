@@ -1,6 +1,22 @@
-22:38:01 **** Incremental Build of configuration Debug for project 2_Web_Server ****
+22:46:22 **** Incremental Build of configuration Debug for project 2_Web_Server ****
 make all 
-make: Nothing to be done for `all'.
+Building file: ../main.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -std=c++11 -MMD -MP -MF"main.d" -MT"main.d" -o "main.o" "../main.cpp"
+In file included from ../Server.h:18:0,
+                 from ../main.cpp:10:
+../ClientHandler.h: In member function ‘void ClientHandler::sendImageFile(std::string)’:
+../ClientHandler.h:143:22: warning: format ‘%d’ expects argument of type ‘int’, but argument 3 has type ‘const char*’ [-Wformat=]
+      filestat.st_size);
+                      ^
+../ClientHandler.h:143:22: warning: too many arguments for format [-Wformat-extra-args]
+Finished building: ../main.cpp
+ 
+Building target: 2_Web_Server
+Invoking: GCC C++ Linker
+g++  -o "2_Web_Server"  ./main.o ./mh_utils.o   
+Finished building target: 2_Web_Server
+ 
 
-22:38:02 Build Finished (took 121ms)
+22:46:27 Build Finished (took 5s.133ms)
 
