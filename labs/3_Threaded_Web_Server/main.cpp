@@ -72,7 +72,8 @@ void parse_args(int argc, char** argv, struct args_t* args) {
 	}
 
 	bool debug = false;
-	unsigned int threadcount, connections;
+	unsigned int threadcount = 20;
+	unsigned int connections = 100;
 	int option;
 	while ((option = getopt(argc, argv, "dt:c:")) != -1) {
 		switch (option) {
