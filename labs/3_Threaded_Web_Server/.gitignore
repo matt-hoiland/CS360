@@ -1,4 +1,5 @@
 /Debug/
 server
 nohup.out
-
+.cproject
+.project
